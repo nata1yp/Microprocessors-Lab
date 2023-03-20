@@ -1,0 +1,45 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega16"</DEVICE>
+ <WORKING_DIR>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m16def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\Debug\3.2.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>3.2.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>3.2.map</FILE>
+  <FILE>3.2.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <_tmp_><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>12</LINE></_tmp_>
+  <reset><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>17</LINE></reset>
+  <main><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>29</LINE></main>
+  <lcd_init_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>258</LINE></lcd_init_sim>
+  <scan_keypad_rising_edge_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>159</LINE></scan_keypad_rising_edge_sim>
+  <keypad_to_ascii_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>192</LINE></keypad_to_ascii_sim>
+  <next><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>36</LINE></next>
+  <wrong_key><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>80</LINE></wrong_key>
+  <correct_key><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>48</LINE></correct_key>
+  <lcd_data_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>338</LINE></lcd_data_sim>
+  <wait_msec><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>384</LINE></wait_msec>
+  <loop><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>100</LINE></loop>
+  <finish><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>115</LINE></finish>
+  <scan_row_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>118</LINE></scan_row_sim>
+  <wait_usec><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>396</LINE></wait_usec>
+  <scan_keypad_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>134</LINE></scan_keypad_sim>
+  <return_ascii><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>252</LINE></return_ascii>
+  <lcd_command_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>325</LINE></lcd_command_sim>
+  <write_2_nibbles_sim><FILE>C:\Users\n_pey\Desktop\ΗΜΜΥ ΕΜΠ\9ο εξάμηνο\Εργαστήριο Μικροϋπολογιστών\Εργαστηριακές Ασκήσεις\3η Εργαστηριακή ’σκηση\’σκηση 2\3.2\3.2\main.asm</FILE><LINE>351</LINE></write_2_nibbles_sim>
+ </LABELS>
+</ASSEMBLER_INFO>

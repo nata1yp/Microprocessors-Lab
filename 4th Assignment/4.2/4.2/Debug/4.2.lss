@@ -1,0 +1,1083 @@
+
+4.2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000005f0  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000664  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000000e  00800060  00800060  00000664  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000664  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000694  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000090  00000000  00000000  000006d0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001085  00000000  00000000  00000760  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000072d  00000000  00000000  000017e5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000852  00000000  00000000  00001f12  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000174  00000000  00000000  00002764  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000498  00000000  00000000  000028d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000abf  00000000  00000000  00002d70  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000080  00000000  00000000  0000382f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 d5 01 	jmp	0x3aa	; 0x3aa <__vector_8>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 e9 01 	jmp	0x3d2	; 0x3d2 <__vector_14>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	ae 36       	cpi	r26, 0x6E	; 110
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 55 02 	call	0x4aa	; 0x4aa <main>
+  74:	0c 94 f6 02 	jmp	0x5ec	; 0x5ec <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <scan_row_sim>:
+char first_digit, second_digit;	// digits pressed
+char x, y, z, flag_clear=0, flag_blink=0, leds;
+
+char scan_row_sim(char y)	// y-->r25
+{
+	PORTC = y;	// Current line is set to 1
+  7c:	85 bb       	out	0x15, r24	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  7e:	87 ee       	ldi	r24, 0xE7	; 231
+  80:	93 e0       	ldi	r25, 0x03	; 3
+  82:	01 97       	sbiw	r24, 0x01	; 1
+  84:	f1 f7       	brne	.-4      	; 0x82 <scan_row_sim+0x6>
+  86:	00 c0       	rjmp	.+0      	; 0x88 <scan_row_sim+0xc>
+  88:	00 00       	nop
+	_delay_us(500);	// delay for ~ 0.5usec (each 'nop' is 1/4usec so it's included to 500usec)
+	return PINC & 0x0F;	// keep the 4 LSB of PORTC
+  8a:	83 b3       	in	r24, 0x13	; 19
+}
+  8c:	8f 70       	andi	r24, 0x0F	; 15
+  8e:	08 95       	ret
+
+00000090 <scan_keypad_sim>:
+
+int scan_keypad_sim(void)	// x-->r24, y-->r25, z-->r26, h-->r27
+{
+  90:	cf 93       	push	r28
+  92:	df 93       	push	r29
+	char z,h;	// set as parameters so as to be topical
+	int result;	// result = r25:r24 to be returned
+	
+	y = 0x10;	// check 1st line
+  94:	80 e1       	ldi	r24, 0x10	; 16
+  96:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <y>
+	x = scan_row_sim(y);	// keep the result
+  9a:	0e 94 3e 00 	call	0x7c	; 0x7c <scan_row_sim>
+  9e:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <x>
+	h =  x<<4;	// and save it in the 4 MSB of h
+  a2:	c8 2f       	mov	r28, r24
+  a4:	c2 95       	swap	r28
+  a6:	c0 7f       	andi	r28, 0xF0	; 240
+	
+	y = 0x20;	// check 2nd line
+  a8:	80 e2       	ldi	r24, 0x20	; 32
+  aa:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <y>
+	x = scan_row_sim(y);	// keep the result
+  ae:	0e 94 3e 00 	call	0x7c	; 0x7c <scan_row_sim>
+  b2:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <x>
+	h = h+x;	// and save it in the 4 LSB of h
+  b6:	c8 0f       	add	r28, r24
+	
+	y = 0x40;	// check 3rd line
+  b8:	80 e4       	ldi	r24, 0x40	; 64
+  ba:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <y>
+	x = scan_row_sim(y);	// keep the result
+  be:	0e 94 3e 00 	call	0x7c	; 0x7c <scan_row_sim>
+  c2:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <x>
+	z =  x<<4;	// and save it in the 4 MSB of z
+  c6:	d8 2f       	mov	r29, r24
+  c8:	d2 95       	swap	r29
+  ca:	d0 7f       	andi	r29, 0xF0	; 240
+	
+	y = 0x80;	// check 2nd line
+  cc:	80 e8       	ldi	r24, 0x80	; 128
+  ce:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <y>
+	x = scan_row_sim(y);	// keep the result
+  d2:	0e 94 3e 00 	call	0x7c	; 0x7c <scan_row_sim>
+  d6:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <x>
+	z = z+x;	// and save it in the 4 LSB of z
+	
+	result = h;
+	return (result<<8) + z;	//return correct number
+  da:	2c 2f       	mov	r18, r28
+  dc:	30 e0       	ldi	r19, 0x00	; 0
+  de:	32 2f       	mov	r19, r18
+  e0:	22 27       	eor	r18, r18
+  e2:	8d 0f       	add	r24, r29
+}
+  e4:	a9 01       	movw	r20, r18
+  e6:	48 0f       	add	r20, r24
+  e8:	51 1d       	adc	r21, r1
+  ea:	ca 01       	movw	r24, r20
+  ec:	df 91       	pop	r29
+  ee:	cf 91       	pop	r28
+  f0:	08 95       	ret
+
+000000f2 <scan_keypad_rising_edge_sim>:
+
+int scan_keypad_rising_edge_sim(void)
+{
+  f2:	cf 93       	push	r28
+  f4:	df 93       	push	r29
+	int y = scan_keypad_sim();	// check the keypad for pressed button
+  f6:	0e 94 48 00 	call	0x90	; 0x90 <scan_keypad_sim>
+  fa:	ec 01       	movw	r28, r24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  fc:	8f e2       	ldi	r24, 0x2F	; 47
+  fe:	95 e7       	ldi	r25, 0x75	; 117
+ 100:	01 97       	sbiw	r24, 0x01	; 1
+ 102:	f1 f7       	brne	.-4      	; 0x100 <scan_keypad_rising_edge_sim+0xe>
+ 104:	00 c0       	rjmp	.+0      	; 0x106 <scan_keypad_rising_edge_sim+0x14>
+ 106:	00 00       	nop
+	_delay_ms(15);	// delay for ~ 15msec
+	int z = scan_keypad_sim();	// check the keypad again
+ 108:	0e 94 48 00 	call	0x90	; 0x90 <scan_keypad_sim>
+	y = y & z;	// bitwise and, so to have the correct result
+ 10c:	8c 23       	and	r24, r28
+ 10e:	9d 23       	and	r25, r29
+	z = tmp;	// load from RAM the previous value
+ 110:	20 91 62 00 	lds	r18, 0x0062	; 0x800062 <tmp>
+ 114:	30 91 63 00 	lds	r19, 0x0063	; 0x800063 <tmp+0x1>
+	tmp = y;	// save in RAM the new value
+ 118:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <tmp+0x1>
+ 11c:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <tmp>
+	z = ~z;	// one's complement
+	y = y & z;	// bitwise and
+	return y;	// return value
+ 120:	20 95       	com	r18
+ 122:	30 95       	com	r19
+}
+ 124:	82 23       	and	r24, r18
+ 126:	93 23       	and	r25, r19
+ 128:	df 91       	pop	r29
+ 12a:	cf 91       	pop	r28
+ 12c:	08 95       	ret
+
+0000012e <keypad_to_ascii_sim>:
+
+char keypad_to_ascii_sim(int x)	// function that makes the number pressed to the ascii value or 0
+{
+	switch(x){
+ 12e:	80 34       	cpi	r24, 0x40	; 64
+ 130:	91 05       	cpc	r25, r1
+ 132:	09 f4       	brne	.+2      	; 0x136 <keypad_to_ascii_sim+0x8>
+ 134:	47 c0       	rjmp	.+142    	; 0x1c4 <keypad_to_ascii_sim+0x96>
+ 136:	d4 f4       	brge	.+52     	; 0x16c <keypad_to_ascii_sim+0x3e>
+ 138:	84 30       	cpi	r24, 0x04	; 4
+ 13a:	91 05       	cpc	r25, r1
+ 13c:	d9 f1       	breq	.+118    	; 0x1b4 <keypad_to_ascii_sim+0x86>
+ 13e:	64 f4       	brge	.+24     	; 0x158 <keypad_to_ascii_sim+0x2a>
+ 140:	81 30       	cpi	r24, 0x01	; 1
+ 142:	91 05       	cpc	r25, r1
+ 144:	09 f4       	brne	.+2      	; 0x148 <keypad_to_ascii_sim+0x1a>
+ 146:	54 c0       	rjmp	.+168    	; 0x1f0 <keypad_to_ascii_sim+0xc2>
+ 148:	82 30       	cpi	r24, 0x02	; 2
+ 14a:	91 05       	cpc	r25, r1
+ 14c:	89 f1       	breq	.+98     	; 0x1b0 <keypad_to_ascii_sim+0x82>
+ 14e:	81 15       	cp	r24, r1
+ 150:	90 48       	sbci	r25, 0x80	; 128
+ 152:	09 f0       	breq	.+2      	; 0x156 <keypad_to_ascii_sim+0x28>
+ 154:	4b c0       	rjmp	.+150    	; 0x1ec <keypad_to_ascii_sim+0xbe>
+ 156:	48 c0       	rjmp	.+144    	; 0x1e8 <keypad_to_ascii_sim+0xba>
+ 158:	80 31       	cpi	r24, 0x10	; 16
+ 15a:	91 05       	cpc	r25, r1
+ 15c:	79 f1       	breq	.+94     	; 0x1bc <keypad_to_ascii_sim+0x8e>
+ 15e:	80 32       	cpi	r24, 0x20	; 32
+ 160:	91 05       	cpc	r25, r1
+ 162:	71 f1       	breq	.+92     	; 0x1c0 <keypad_to_ascii_sim+0x92>
+ 164:	08 97       	sbiw	r24, 0x08	; 8
+ 166:	09 f0       	breq	.+2      	; 0x16a <keypad_to_ascii_sim+0x3c>
+ 168:	41 c0       	rjmp	.+130    	; 0x1ec <keypad_to_ascii_sim+0xbe>
+ 16a:	26 c0       	rjmp	.+76     	; 0x1b8 <keypad_to_ascii_sim+0x8a>
+ 16c:	81 15       	cp	r24, r1
+ 16e:	24 e0       	ldi	r18, 0x04	; 4
+ 170:	92 07       	cpc	r25, r18
+ 172:	81 f1       	breq	.+96     	; 0x1d4 <keypad_to_ascii_sim+0xa6>
+ 174:	64 f4       	brge	.+24     	; 0x18e <keypad_to_ascii_sim+0x60>
+ 176:	81 15       	cp	r24, r1
+ 178:	21 e0       	ldi	r18, 0x01	; 1
+ 17a:	92 07       	cpc	r25, r18
+ 17c:	39 f1       	breq	.+78     	; 0x1cc <keypad_to_ascii_sim+0x9e>
+ 17e:	81 15       	cp	r24, r1
+ 180:	22 e0       	ldi	r18, 0x02	; 2
+ 182:	92 07       	cpc	r25, r18
+ 184:	29 f1       	breq	.+74     	; 0x1d0 <keypad_to_ascii_sim+0xa2>
+ 186:	80 38       	cpi	r24, 0x80	; 128
+ 188:	91 05       	cpc	r25, r1
+ 18a:	81 f5       	brne	.+96     	; 0x1ec <keypad_to_ascii_sim+0xbe>
+ 18c:	1d c0       	rjmp	.+58     	; 0x1c8 <keypad_to_ascii_sim+0x9a>
+ 18e:	81 15       	cp	r24, r1
+ 190:	20 e1       	ldi	r18, 0x10	; 16
+ 192:	92 07       	cpc	r25, r18
+ 194:	19 f1       	breq	.+70     	; 0x1dc <keypad_to_ascii_sim+0xae>
+ 196:	24 f4       	brge	.+8      	; 0x1a0 <keypad_to_ascii_sim+0x72>
+ 198:	81 15       	cp	r24, r1
+ 19a:	98 40       	sbci	r25, 0x08	; 8
+ 19c:	e9 f0       	breq	.+58     	; 0x1d8 <keypad_to_ascii_sim+0xaa>
+ 19e:	26 c0       	rjmp	.+76     	; 0x1ec <keypad_to_ascii_sim+0xbe>
+ 1a0:	81 15       	cp	r24, r1
+ 1a2:	20 e2       	ldi	r18, 0x20	; 32
+ 1a4:	92 07       	cpc	r25, r18
+ 1a6:	e1 f0       	breq	.+56     	; 0x1e0 <keypad_to_ascii_sim+0xb2>
+ 1a8:	81 15       	cp	r24, r1
+ 1aa:	90 44       	sbci	r25, 0x40	; 64
+ 1ac:	d9 f0       	breq	.+54     	; 0x1e4 <keypad_to_ascii_sim+0xb6>
+ 1ae:	1e c0       	rjmp	.+60     	; 0x1ec <keypad_to_ascii_sim+0xbe>
+		case 0x01:return '*';
+		case 0x02:return '0';
+ 1b0:	80 e3       	ldi	r24, 0x30	; 48
+ 1b2:	08 95       	ret
+		case 0x04:return '#';
+ 1b4:	83 e2       	ldi	r24, 0x23	; 35
+ 1b6:	08 95       	ret
+		case 0x08:return 'D';
+ 1b8:	84 e4       	ldi	r24, 0x44	; 68
+ 1ba:	08 95       	ret
+		case 0x10:return '7';
+ 1bc:	87 e3       	ldi	r24, 0x37	; 55
+ 1be:	08 95       	ret
+		case 0x20:return '8';
+ 1c0:	88 e3       	ldi	r24, 0x38	; 56
+ 1c2:	08 95       	ret
+		case 0x40:return '9';
+ 1c4:	89 e3       	ldi	r24, 0x39	; 57
+ 1c6:	08 95       	ret
+		case 0x80:return 'C';
+ 1c8:	83 e4       	ldi	r24, 0x43	; 67
+ 1ca:	08 95       	ret
+		case 0x100:return '4';
+ 1cc:	84 e3       	ldi	r24, 0x34	; 52
+ 1ce:	08 95       	ret
+		case 0x200:return '5';
+ 1d0:	85 e3       	ldi	r24, 0x35	; 53
+ 1d2:	08 95       	ret
+		case 0x400:return '6';
+ 1d4:	86 e3       	ldi	r24, 0x36	; 54
+ 1d6:	08 95       	ret
+		case 0x800:return 'B';
+ 1d8:	82 e4       	ldi	r24, 0x42	; 66
+ 1da:	08 95       	ret
+		case 0x1000:return '1';
+ 1dc:	81 e3       	ldi	r24, 0x31	; 49
+ 1de:	08 95       	ret
+		case 0x2000:return '2';
+ 1e0:	82 e3       	ldi	r24, 0x32	; 50
+ 1e2:	08 95       	ret
+		case 0x4000:return '3';
+ 1e4:	83 e3       	ldi	r24, 0x33	; 51
+ 1e6:	08 95       	ret
+		case 0x8000:return 'A';
+ 1e8:	81 e4       	ldi	r24, 0x41	; 65
+ 1ea:	08 95       	ret
+	}
+	return 0;
+ 1ec:	80 e0       	ldi	r24, 0x00	; 0
+ 1ee:	08 95       	ret
+}
+
+char keypad_to_ascii_sim(int x)	// function that makes the number pressed to the ascii value or 0
+{
+	switch(x){
+		case 0x01:return '*';
+ 1f0:	8a e2       	ldi	r24, 0x2A	; 42
+		case 0x2000:return '2';
+		case 0x4000:return '3';
+		case 0x8000:return 'A';
+	}
+	return 0;
+}
+ 1f2:	08 95       	ret
+
+000001f4 <write_2_nibbles_sim>:
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1f4:	ef ed       	ldi	r30, 0xDF	; 223
+ 1f6:	fe e2       	ldi	r31, 0x2E	; 46
+ 1f8:	31 97       	sbiw	r30, 0x01	; 1
+ 1fa:	f1 f7       	brne	.-4      	; 0x1f8 <write_2_nibbles_sim+0x4>
+ 1fc:	00 c0       	rjmp	.+0      	; 0x1fe <write_2_nibbles_sim+0xa>
+ 1fe:	00 00       	nop
+
+void write_2_nibbles_sim(char x)
+{
+	char k,v;	//local variable for this program
+	_delay_us(6000);	// delay for ~ 6000usec | protection for simulation
+	k = (PIND & 0x0f);	// k is r25
+ 200:	90 b3       	in	r25, 0x10	; 16
+ 202:	9f 70       	andi	r25, 0x0F	; 15
+	v =  k + (x & 0xf0);
+ 204:	28 2f       	mov	r18, r24
+ 206:	20 7f       	andi	r18, 0xF0	; 240
+ 208:	29 0f       	add	r18, r25
+	PORTD = v;	//output in PORTD
+ 20a:	22 bb       	out	0x12, r18	; 18
+	v = PIND | 0x08;
+ 20c:	20 b3       	in	r18, 0x10	; 16
+ 20e:	28 60       	ori	r18, 0x08	; 8
+	PORTD = v;
+ 210:	22 bb       	out	0x12, r18	; 18
+	v = PIND & 0xf7;
+ 212:	20 b3       	in	r18, 0x10	; 16
+ 214:	27 7f       	andi	r18, 0xF7	; 247
+	PORTD = v;			//PD3=1 and then PD3=0 (enable pulse)
+ 216:	22 bb       	out	0x12, r18	; 18
+ 218:	ef ed       	ldi	r30, 0xDF	; 223
+ 21a:	fe e2       	ldi	r31, 0x2E	; 46
+ 21c:	31 97       	sbiw	r30, 0x01	; 1
+ 21e:	f1 f7       	brne	.-4      	; 0x21c <write_2_nibbles_sim+0x28>
+ 220:	00 c0       	rjmp	.+0      	; 0x222 <write_2_nibbles_sim+0x2e>
+ 222:	00 00       	nop
+	_delay_us(6000);	// delay for ~ 6000usec | protection for simulation
+	v =  k + ((x >> 4 | x << 4) & 0xf0);
+ 224:	82 95       	swap	r24
+ 226:	80 7f       	andi	r24, 0xF0	; 240
+ 228:	98 0f       	add	r25, r24
+	PORTD = v;	//output in PORTD
+ 22a:	92 bb       	out	0x12, r25	; 18
+	v = PIND | 0x08;
+ 22c:	80 b3       	in	r24, 0x10	; 16
+ 22e:	88 60       	ori	r24, 0x08	; 8
+	PORTD = v;			//PD3=1 and then PD3=0 (enable pulse)
+ 230:	82 bb       	out	0x12, r24	; 18
+	v = PIND & 0xf7;
+ 232:	80 b3       	in	r24, 0x10	; 16
+ 234:	87 7f       	andi	r24, 0xF7	; 247
+	PORTD = v;
+ 236:	82 bb       	out	0x12, r24	; 18
+ 238:	08 95       	ret
+
+0000023a <lcd_data_sim>:
+
+}
+
+void lcd_data_sim(char x)
+{
+	PORTD = (1<<PD2);
+ 23a:	94 e0       	ldi	r25, 0x04	; 4
+ 23c:	92 bb       	out	0x12, r25	; 18
+	write_2_nibbles_sim(x);
+ 23e:	0e 94 fa 00 	call	0x1f4	; 0x1f4 <write_2_nibbles_sim>
+ 242:	82 e7       	ldi	r24, 0x72	; 114
+ 244:	8a 95       	dec	r24
+ 246:	f1 f7       	brne	.-4      	; 0x244 <lcd_data_sim+0xa>
+ 248:	00 c0       	rjmp	.+0      	; 0x24a <lcd_data_sim+0x10>
+ 24a:	08 95       	ret
+
+0000024c <lcd_command_sim>:
+	_delay_us(43);	// delay for ~ 43usec
+}
+
+void lcd_command_sim(char x)
+{
+	PORTD = (0<<PD2);
+ 24c:	12 ba       	out	0x12, r1	; 18
+	write_2_nibbles_sim(x);
+ 24e:	0e 94 fa 00 	call	0x1f4	; 0x1f4 <write_2_nibbles_sim>
+ 252:	88 e6       	ldi	r24, 0x68	; 104
+ 254:	8a 95       	dec	r24
+ 256:	f1 f7       	brne	.-4      	; 0x254 <lcd_command_sim+0x8>
+ 258:	08 95       	ret
+
+0000025a <lcd_init_sim>:
+ 25a:	8a e6       	ldi	r24, 0x6A	; 106
+ 25c:	8a 95       	dec	r24
+ 25e:	f1 f7       	brne	.-4      	; 0x25c <lcd_init_sim+0x2>
+ 260:	00 c0       	rjmp	.+0      	; 0x262 <lcd_init_sim+0x8>
+
+void lcd_init_sim()
+{
+	char v; //local variable
+	_delay_us(40);	// delay for ~ 40usec
+	PORTD = 0x30;		//8-bit mode
+ 262:	90 e3       	ldi	r25, 0x30	; 48
+ 264:	92 bb       	out	0x12, r25	; 18
+	v = PIND | 0x08;
+ 266:	80 b3       	in	r24, 0x10	; 16
+ 268:	88 60       	ori	r24, 0x08	; 8
+	PORTD = v;			//PD3=1
+ 26a:	82 bb       	out	0x12, r24	; 18
+	v = PIND & 0xf7;
+ 26c:	80 b3       	in	r24, 0x10	; 16
+ 26e:	87 7f       	andi	r24, 0xF7	; 247
+	PORTD = v;			//PD3=0
+ 270:	82 bb       	out	0x12, r24	; 18
+ 272:	e8 e6       	ldi	r30, 0x68	; 104
+ 274:	ea 95       	dec	r30
+ 276:	f1 f7       	brne	.-4      	; 0x274 <lcd_init_sim+0x1a>
+ 278:	ef ec       	ldi	r30, 0xCF	; 207
+ 27a:	f7 e0       	ldi	r31, 0x07	; 7
+ 27c:	31 97       	sbiw	r30, 0x01	; 1
+ 27e:	f1 f7       	brne	.-4      	; 0x27c <lcd_init_sim+0x22>
+ 280:	00 c0       	rjmp	.+0      	; 0x282 <lcd_init_sim+0x28>
+ 282:	00 00       	nop
+	_delay_us(39);	// delay for ~ 39usec
+	_delay_us(1000);	// delay for ~ 1000usec | protection for the simulation
+	PORTD = 0x30;
+ 284:	92 bb       	out	0x12, r25	; 18
+	v = PIND | 0x08;
+ 286:	80 b3       	in	r24, 0x10	; 16
+ 288:	88 60       	ori	r24, 0x08	; 8
+	PORTD = v;			//PD3=1
+ 28a:	82 bb       	out	0x12, r24	; 18
+	v = PIND & 0xf7;
+ 28c:	80 b3       	in	r24, 0x10	; 16
+ 28e:	87 7f       	andi	r24, 0xF7	; 247
+	PORTD = v;			//PD3=0
+ 290:	82 bb       	out	0x12, r24	; 18
+ 292:	f8 e6       	ldi	r31, 0x68	; 104
+ 294:	fa 95       	dec	r31
+ 296:	f1 f7       	brne	.-4      	; 0x294 <lcd_init_sim+0x3a>
+ 298:	8f ec       	ldi	r24, 0xCF	; 207
+ 29a:	97 e0       	ldi	r25, 0x07	; 7
+ 29c:	01 97       	sbiw	r24, 0x01	; 1
+ 29e:	f1 f7       	brne	.-4      	; 0x29c <lcd_init_sim+0x42>
+ 2a0:	00 c0       	rjmp	.+0      	; 0x2a2 <lcd_init_sim+0x48>
+ 2a2:	00 00       	nop
+	_delay_us(39);	// delay for ~ 39usec
+	_delay_us(1000);	// delay for ~ 1000usec | protection for the simulation
+	
+	PORTD = 0x20;		//change in 4-bit mode
+ 2a4:	80 e2       	ldi	r24, 0x20	; 32
+ 2a6:	82 bb       	out	0x12, r24	; 18
+	v = PIND | 0x08;
+ 2a8:	80 b3       	in	r24, 0x10	; 16
+ 2aa:	88 60       	ori	r24, 0x08	; 8
+	PORTD = v;			//PD3=1
+ 2ac:	82 bb       	out	0x12, r24	; 18
+	v = PIND & 0xf7;
+ 2ae:	80 b3       	in	r24, 0x10	; 16
+ 2b0:	87 7f       	andi	r24, 0xF7	; 247
+	PORTD = v;			//PD3=0
+ 2b2:	82 bb       	out	0x12, r24	; 18
+ 2b4:	98 e6       	ldi	r25, 0x68	; 104
+ 2b6:	9a 95       	dec	r25
+ 2b8:	f1 f7       	brne	.-4      	; 0x2b6 <lcd_init_sim+0x5c>
+ 2ba:	ef ec       	ldi	r30, 0xCF	; 207
+ 2bc:	f7 e0       	ldi	r31, 0x07	; 7
+ 2be:	31 97       	sbiw	r30, 0x01	; 1
+ 2c0:	f1 f7       	brne	.-4      	; 0x2be <lcd_init_sim+0x64>
+ 2c2:	00 c0       	rjmp	.+0      	; 0x2c4 <lcd_init_sim+0x6a>
+ 2c4:	00 00       	nop
+	_delay_us(39);	// delay for ~ 39usec
+	_delay_us(1000);	// delay for ~ 1000usec | protection for the simulation
+	lcd_command_sim(0x28);	// choose character size 5x8
+ 2c6:	88 e2       	ldi	r24, 0x28	; 40
+ 2c8:	0e 94 26 01 	call	0x24c	; 0x24c <lcd_command_sim>
+	lcd_command_sim(0x0c);	// turn on screen, hide cursor
+ 2cc:	8c e0       	ldi	r24, 0x0C	; 12
+ 2ce:	0e 94 26 01 	call	0x24c	; 0x24c <lcd_command_sim>
+	lcd_command_sim(0x01);	// clear screen
+ 2d2:	81 e0       	ldi	r24, 0x01	; 1
+ 2d4:	0e 94 26 01 	call	0x24c	; 0x24c <lcd_command_sim>
+ 2d8:	83 ef       	ldi	r24, 0xF3	; 243
+ 2da:	9b e0       	ldi	r25, 0x0B	; 11
+ 2dc:	01 97       	sbiw	r24, 0x01	; 1
+ 2de:	f1 f7       	brne	.-4      	; 0x2dc <lcd_init_sim+0x82>
+ 2e0:	00 c0       	rjmp	.+0      	; 0x2e2 <lcd_init_sim+0x88>
+ 2e2:	00 00       	nop
+	_delay_us(1530);	// delay for ~ 1530usec
+	lcd_command_sim(0x06);	// activate automatic address increase by 1 and deactivate screen sliding
+ 2e4:	86 e0       	ldi	r24, 0x06	; 6
+ 2e6:	0e 94 26 01 	call	0x24c	; 0x24c <lcd_command_sim>
+ 2ea:	08 95       	ret
+
+000002ec <CLEAR>:
+}
+
+void CLEAR()
+{
+
+	if (flag_clear == 1)		// if previous state was Gas Detected display Clear
+ 2ec:	80 91 61 00 	lds	r24, 0x0061	; 0x800061 <flag_clear>
+ 2f0:	81 30       	cpi	r24, 0x01	; 1
+ 2f2:	99 f4       	brne	.+38     	; 0x31a <CLEAR+0x2e>
+	{
+		flag_clear=0;	
+ 2f4:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <flag_clear>
+		lcd_init_sim();	
+ 2f8:	0e 94 2d 01 	call	0x25a	; 0x25a <lcd_init_sim>
+		lcd_data_sim('C');
+ 2fc:	83 e4       	ldi	r24, 0x43	; 67
+ 2fe:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('L');
+ 302:	8c e4       	ldi	r24, 0x4C	; 76
+ 304:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('E');
+ 308:	85 e4       	ldi	r24, 0x45	; 69
+ 30a:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('A');
+ 30e:	81 e4       	ldi	r24, 0x41	; 65
+ 310:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('R');
+ 314:	82 e5       	ldi	r24, 0x52	; 82
+ 316:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		//_delay_ms(200);
+	}
+	TCNT1H = 0xfc;
+ 31a:	8c ef       	ldi	r24, 0xFC	; 252
+ 31c:	8d bd       	out	0x2d, r24	; 45
+	TCNT1L = 0xf3;
+ 31e:	83 ef       	ldi	r24, 0xF3	; 243
+ 320:	8c bd       	out	0x2c, r24	; 44
+ 322:	08 95       	ret
+
+00000324 <GAS>:
+}
+
+void GAS()
+{
+	if (flag_clear == 0)		// if previous state was Clear display Gas Detected
+ 324:	80 91 61 00 	lds	r24, 0x0061	; 0x800061 <flag_clear>
+ 328:	81 11       	cpse	r24, r1
+ 32a:	29 c0       	rjmp	.+82     	; 0x37e <GAS+0x5a>
+	{
+		flag_clear=1;
+ 32c:	81 e0       	ldi	r24, 0x01	; 1
+ 32e:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <flag_clear>
+		lcd_init_sim();
+ 332:	0e 94 2d 01 	call	0x25a	; 0x25a <lcd_init_sim>
+		lcd_data_sim('G');
+ 336:	87 e4       	ldi	r24, 0x47	; 71
+ 338:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('A');
+ 33c:	81 e4       	ldi	r24, 0x41	; 65
+ 33e:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('S');
+ 342:	83 e5       	ldi	r24, 0x53	; 83
+ 344:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim(' ');
+ 348:	80 e2       	ldi	r24, 0x20	; 32
+ 34a:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('D');
+ 34e:	84 e4       	ldi	r24, 0x44	; 68
+ 350:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('E');
+ 354:	85 e4       	ldi	r24, 0x45	; 69
+ 356:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('T');
+ 35a:	84 e5       	ldi	r24, 0x54	; 84
+ 35c:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('E');
+ 360:	85 e4       	ldi	r24, 0x45	; 69
+ 362:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('C');
+ 366:	83 e4       	ldi	r24, 0x43	; 67
+ 368:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('T');
+ 36c:	84 e5       	ldi	r24, 0x54	; 84
+ 36e:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('E');
+ 372:	85 e4       	ldi	r24, 0x45	; 69
+ 374:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+		lcd_data_sim('D');
+ 378:	84 e4       	ldi	r24, 0x44	; 68
+ 37a:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+	}
+	TCNT1H = 0xfc;
+ 37e:	8c ef       	ldi	r24, 0xFC	; 252
+ 380:	8d bd       	out	0x2d, r24	; 45
+	TCNT1L = 0xf3;
+ 382:	83 ef       	ldi	r24, 0xF3	; 243
+ 384:	8c bd       	out	0x2c, r24	; 44
+ 386:	08 95       	ret
+
+00000388 <Gas_on_led>:
+}
+
+void Gas_on_led() // make leds blink when in Gas Detected state 
+{ 
+	if (flag_blink == 0) // if in previous Gas detected state leds were on, turn them off 
+ 388:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 38c:	81 11       	cpse	r24, r1
+ 38e:	07 c0       	rjmp	.+14     	; 0x39e <Gas_on_led+0x16>
+	{ 
+		flag_blink = 1; 
+ 390:	81 e0       	ldi	r24, 0x01	; 1
+ 392:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+		PORTB = leds; 
+ 396:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <leds>
+ 39a:	88 bb       	out	0x18, r24	; 24
+ 39c:	03 c0       	rjmp	.+6      	; 0x3a4 <Gas_on_led+0x1c>
+	} 
+	else 
+	{
+		flag_blink = 0; 
+ 39e:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+		PORTB = 0; 
+ 3a2:	18 ba       	out	0x18, r1	; 24
+	} 
+	GAS(); 
+ 3a4:	0e 94 92 01 	call	0x324	; 0x324 <GAS>
+ 3a8:	08 95       	ret
+
+000003aa <__vector_8>:
+}
+
+
+ISR(TIMER1_OVF_vect)
+{
+ 3aa:	1f 92       	push	r1
+ 3ac:	0f 92       	push	r0
+ 3ae:	0f b6       	in	r0, 0x3f	; 63
+ 3b0:	0f 92       	push	r0
+ 3b2:	11 24       	eor	r1, r1
+ 3b4:	8f 93       	push	r24
+	cli(); //deactivate interrupts 
+ 3b6:	f8 94       	cli
+	ADCSRA = (1<<ADEN)|(1<<ADIE)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADSC);	// start transformation now 
+ 3b8:	8f ec       	ldi	r24, 0xCF	; 207
+ 3ba:	86 b9       	out	0x06, r24	; 6
+	TCNT1H = 0xfc; 
+ 3bc:	8c ef       	ldi	r24, 0xFC	; 252
+ 3be:	8d bd       	out	0x2d, r24	; 45
+	TCNT1L = 0xf3; 
+ 3c0:	83 ef       	ldi	r24, 0xF3	; 243
+ 3c2:	8c bd       	out	0x2c, r24	; 44
+	sei(); //reactivate interrupts
+ 3c4:	78 94       	sei
+}
+ 3c6:	8f 91       	pop	r24
+ 3c8:	0f 90       	pop	r0
+ 3ca:	0f be       	out	0x3f, r0	; 63
+ 3cc:	0f 90       	pop	r0
+ 3ce:	1f 90       	pop	r1
+ 3d0:	18 95       	reti
+
+000003d2 <__vector_14>:
+
+
+ISR(ADC_vect) // turn leds on according to the CO concentration level 
+{ 
+ 3d2:	1f 92       	push	r1
+ 3d4:	0f 92       	push	r0
+ 3d6:	0f b6       	in	r0, 0x3f	; 63
+ 3d8:	0f 92       	push	r0
+ 3da:	11 24       	eor	r1, r1
+ 3dc:	2f 93       	push	r18
+ 3de:	3f 93       	push	r19
+ 3e0:	4f 93       	push	r20
+ 3e2:	5f 93       	push	r21
+ 3e4:	6f 93       	push	r22
+ 3e6:	7f 93       	push	r23
+ 3e8:	8f 93       	push	r24
+ 3ea:	9f 93       	push	r25
+ 3ec:	af 93       	push	r26
+ 3ee:	bf 93       	push	r27
+ 3f0:	ef 93       	push	r30
+ 3f2:	ff 93       	push	r31
+	if (ADC<=0x72) 
+ 3f4:	84 b1       	in	r24, 0x04	; 4
+ 3f6:	95 b1       	in	r25, 0x05	; 5
+ 3f8:	83 37       	cpi	r24, 0x73	; 115
+ 3fa:	91 05       	cpc	r25, r1
+ 3fc:	28 f4       	brcc	.+10     	; 0x408 <__LOCK_REGION_LENGTH__+0x8>
+	{ 
+		PORTB = 0b00000001; 
+ 3fe:	81 e0       	ldi	r24, 0x01	; 1
+ 400:	88 bb       	out	0x18, r24	; 24
+		CLEAR(); 
+ 402:	0e 94 76 01 	call	0x2ec	; 0x2ec <CLEAR>
+ 406:	3b c0       	rjmp	.+118    	; 0x47e <__stack+0x1f>
+	} 
+	else if (ADC<=0xcf) 
+ 408:	84 b1       	in	r24, 0x04	; 4
+ 40a:	95 b1       	in	r25, 0x05	; 5
+ 40c:	80 3d       	cpi	r24, 0xD0	; 208
+ 40e:	91 05       	cpc	r25, r1
+ 410:	28 f4       	brcc	.+10     	; 0x41c <__LOCK_REGION_LENGTH__+0x1c>
+	{ 
+		PORTB = 0b00000011; 
+ 412:	83 e0       	ldi	r24, 0x03	; 3
+ 414:	88 bb       	out	0x18, r24	; 24
+		CLEAR(); 
+ 416:	0e 94 76 01 	call	0x2ec	; 0x2ec <CLEAR>
+ 41a:	31 c0       	rjmp	.+98     	; 0x47e <__stack+0x1f>
+	} 
+	else if (ADC<=0x12c) 
+ 41c:	84 b1       	in	r24, 0x04	; 4
+ 41e:	95 b1       	in	r25, 0x05	; 5
+ 420:	8d 32       	cpi	r24, 0x2D	; 45
+ 422:	91 40       	sbci	r25, 0x01	; 1
+ 424:	30 f4       	brcc	.+12     	; 0x432 <__LOCK_REGION_LENGTH__+0x32>
+	{ 
+		leds = 0b00000111; 
+ 426:	87 e0       	ldi	r24, 0x07	; 7
+ 428:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <leds>
+		Gas_on_led(); 
+ 42c:	0e 94 c4 01 	call	0x388	; 0x388 <Gas_on_led>
+ 430:	26 c0       	rjmp	.+76     	; 0x47e <__stack+0x1f>
+	} 
+	else if (ADC<=0x18a) 
+ 432:	84 b1       	in	r24, 0x04	; 4
+ 434:	95 b1       	in	r25, 0x05	; 5
+ 436:	8b 38       	cpi	r24, 0x8B	; 139
+ 438:	91 40       	sbci	r25, 0x01	; 1
+ 43a:	30 f4       	brcc	.+12     	; 0x448 <__LOCK_REGION_LENGTH__+0x48>
+	{ 
+		leds = 0b00001111; 
+ 43c:	8f e0       	ldi	r24, 0x0F	; 15
+ 43e:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <leds>
+		Gas_on_led(); 
+ 442:	0e 94 c4 01 	call	0x388	; 0x388 <Gas_on_led>
+ 446:	1b c0       	rjmp	.+54     	; 0x47e <__stack+0x1f>
+	} 
+	else if (ADC<=0x1e7) 
+ 448:	84 b1       	in	r24, 0x04	; 4
+ 44a:	95 b1       	in	r25, 0x05	; 5
+ 44c:	88 3e       	cpi	r24, 0xE8	; 232
+ 44e:	91 40       	sbci	r25, 0x01	; 1
+ 450:	30 f4       	brcc	.+12     	; 0x45e <__LOCK_REGION_LENGTH__+0x5e>
+	{ 
+		leds = 0b00011111; 
+ 452:	8f e1       	ldi	r24, 0x1F	; 31
+ 454:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <leds>
+		Gas_on_led(); 
+ 458:	0e 94 c4 01 	call	0x388	; 0x388 <Gas_on_led>
+ 45c:	10 c0       	rjmp	.+32     	; 0x47e <__stack+0x1f>
+	} 
+	else if (ADC<=0x244) 
+ 45e:	84 b1       	in	r24, 0x04	; 4
+ 460:	95 b1       	in	r25, 0x05	; 5
+ 462:	85 34       	cpi	r24, 0x45	; 69
+ 464:	92 40       	sbci	r25, 0x02	; 2
+ 466:	30 f4       	brcc	.+12     	; 0x474 <__stack+0x15>
+	{
+		leds = 0b00111111; 
+ 468:	8f e3       	ldi	r24, 0x3F	; 63
+ 46a:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <leds>
+		Gas_on_led(); 
+ 46e:	0e 94 c4 01 	call	0x388	; 0x388 <Gas_on_led>
+ 472:	05 c0       	rjmp	.+10     	; 0x47e <__stack+0x1f>
+	} 
+	else 
+	{ 
+		leds = 0b01111111; 
+ 474:	8f e7       	ldi	r24, 0x7F	; 127
+ 476:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <leds>
+		Gas_on_led(); 
+ 47a:	0e 94 c4 01 	call	0x388	; 0x388 <Gas_on_led>
+	} 
+}
+ 47e:	ff 91       	pop	r31
+ 480:	ef 91       	pop	r30
+ 482:	bf 91       	pop	r27
+ 484:	af 91       	pop	r26
+ 486:	9f 91       	pop	r25
+ 488:	8f 91       	pop	r24
+ 48a:	7f 91       	pop	r23
+ 48c:	6f 91       	pop	r22
+ 48e:	5f 91       	pop	r21
+ 490:	4f 91       	pop	r20
+ 492:	3f 91       	pop	r19
+ 494:	2f 91       	pop	r18
+ 496:	0f 90       	pop	r0
+ 498:	0f be       	out	0x3f, r0	; 63
+ 49a:	0f 90       	pop	r0
+ 49c:	1f 90       	pop	r1
+ 49e:	18 95       	reti
+
+000004a0 <ADC_init>:
+
+
+void ADC_init()
+{
+	ADMUX =  (1<<REFS0);
+ 4a0:	80 e4       	ldi	r24, 0x40	; 64
+ 4a2:	87 b9       	out	0x07, r24	; 7
+	ADCSRA = (1<<ADEN)|(1<<ADIE)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
+ 4a4:	8f e8       	ldi	r24, 0x8F	; 143
+ 4a6:	86 b9       	out	0x06, r24	; 6
+ 4a8:	08 95       	ret
+
+000004aa <main>:
+}
+
+int main(void)
+{
+	ADC_init();
+ 4aa:	0e 94 50 02 	call	0x4a0	; 0x4a0 <ADC_init>
+	lcd_init_sim();
+ 4ae:	0e 94 2d 01 	call	0x25a	; 0x25a <lcd_init_sim>
+	
+	DDRB = 0xFF;	// initialize PB0-7 as output
+ 4b2:	8f ef       	ldi	r24, 0xFF	; 255
+ 4b4:	87 bb       	out	0x17, r24	; 23
+	DDRD = 0xFF;
+ 4b6:	81 bb       	out	0x11, r24	; 17
+	DDRC = (1 << PC7) | (1 << PC6) | (1 << PC5) | (1 << PC4);	// initialize PC4-7 as output
+ 4b8:	80 ef       	ldi	r24, 0xF0	; 240
+ 4ba:	84 bb       	out	0x14, r24	; 20
+		
+	//enable interrupts for timer , set frequency and initialize
+	TIMSK = (1 << TOIE1);
+ 4bc:	84 e0       	ldi	r24, 0x04	; 4
+ 4be:	89 bf       	out	0x39, r24	; 57
+	TCCR1B = (1 << CS12) | (0<<CS11) | (1<<CS10);
+ 4c0:	85 e0       	ldi	r24, 0x05	; 5
+ 4c2:	8e bd       	out	0x2e, r24	; 46
+	TCNT1H = 0xfc;
+ 4c4:	8c ef       	ldi	r24, 0xFC	; 252
+ 4c6:	8d bd       	out	0x2d, r24	; 45
+	TCNT1L = 0xf3;
+ 4c8:	83 ef       	ldi	r24, 0xF3	; 243
+ 4ca:	8c bd       	out	0x2c, r24	; 44
+	sei();
+ 4cc:	78 94       	sei
+			lcd_data_sim('E');
+			lcd_data_sim(' ');
+			lcd_data_sim('4');
+			lcd_data_sim('1');	// display "WELCOME 41"
+
+			PORTB = (1 << PB7);	// turn on LED in PB7
+ 4ce:	10 e8       	ldi	r17, 0x80	; 128
+			PORTB = (0 << PB7);	// turn off LED in PB7
+			
+			flag_clear = 0;
+
+			lcd_init_sim();
+			TCNT1H = 0xfc;
+ 4d0:	dc ef       	ldi	r29, 0xFC	; 252
+			TCNT1L = 0xf3;
+ 4d2:	c3 ef       	ldi	r28, 0xF3	; 243
+	TCNT1L = 0xf3;
+	sei();
+	
+	while(1)
+	{
+		first_digit = 0;	//initialize first digit with 0
+ 4d4:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <first_digit>
+		second_digit = 0;	//initialize first digit with 0
+ 4d8:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <second_digit>
+		do{
+			num_pressed = scan_keypad_rising_edge_sim();
+ 4dc:	0e 94 79 00 	call	0xf2	; 0xf2 <scan_keypad_rising_edge_sim>
+ 4e0:	90 93 6c 00 	sts	0x006C, r25	; 0x80006c <num_pressed+0x1>
+ 4e4:	80 93 6b 00 	sts	0x006B, r24	; 0x80006b <num_pressed>
+			first_digit = keypad_to_ascii_sim(num_pressed);		// read and store 1st digit
+ 4e8:	0e 94 97 00 	call	0x12e	; 0x12e <keypad_to_ascii_sim>
+ 4ec:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <first_digit>
+		} while(first_digit==0);	//repeat until first digit is valid
+ 4f0:	88 23       	and	r24, r24
+ 4f2:	a1 f3       	breq	.-24     	; 0x4dc <main+0x32>
+		do{
+			num_pressed = scan_keypad_rising_edge_sim();
+ 4f4:	0e 94 79 00 	call	0xf2	; 0xf2 <scan_keypad_rising_edge_sim>
+ 4f8:	90 93 6c 00 	sts	0x006C, r25	; 0x80006c <num_pressed+0x1>
+ 4fc:	80 93 6b 00 	sts	0x006B, r24	; 0x80006b <num_pressed>
+			second_digit = keypad_to_ascii_sim(num_pressed);	// read and store 2nd digit
+ 500:	0e 94 97 00 	call	0x12e	; 0x12e <keypad_to_ascii_sim>
+ 504:	80 93 66 00 	sts	0x0066, r24	; 0x800066 <second_digit>
+		} while(second_digit==0);	//repeat until second digit is valid
+ 508:	88 23       	and	r24, r24
+ 50a:	a1 f3       	breq	.-24     	; 0x4f4 <main+0x4a>
+		scan_keypad_rising_edge_sim();	// we call that for safety reasons
+ 50c:	0e 94 79 00 	call	0xf2	; 0xf2 <scan_keypad_rising_edge_sim>
+		
+		
+		if((first_digit=='4') && (second_digit=='1'))	// if the key is correct
+ 510:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <first_digit>
+ 514:	84 33       	cpi	r24, 0x34	; 52
+ 516:	09 f0       	breq	.+2      	; 0x51a <main+0x70>
+ 518:	64 c0       	rjmp	.+200    	; 0x5e2 <main+0x138>
+ 51a:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <second_digit>
+ 51e:	81 33       	cpi	r24, 0x31	; 49
+ 520:	a1 f5       	brne	.+104    	; 0x58a <main+0xe0>
+		{
+			cli();
+ 522:	f8 94       	cli
+			lcd_init_sim();
+ 524:	0e 94 2d 01 	call	0x25a	; 0x25a <lcd_init_sim>
+			lcd_data_sim('W');
+ 528:	87 e5       	ldi	r24, 0x57	; 87
+ 52a:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('E');
+ 52e:	85 e4       	ldi	r24, 0x45	; 69
+ 530:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('L');
+ 534:	8c e4       	ldi	r24, 0x4C	; 76
+ 536:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('C');
+ 53a:	83 e4       	ldi	r24, 0x43	; 67
+ 53c:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('O');
+ 540:	8f e4       	ldi	r24, 0x4F	; 79
+ 542:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('M');
+ 546:	8d e4       	ldi	r24, 0x4D	; 77
+ 548:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('E');
+ 54c:	85 e4       	ldi	r24, 0x45	; 69
+ 54e:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim(' ');
+ 552:	80 e2       	ldi	r24, 0x20	; 32
+ 554:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('4');
+ 558:	84 e3       	ldi	r24, 0x34	; 52
+ 55a:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+			lcd_data_sim('1');	// display "WELCOME 41"
+ 55e:	81 e3       	ldi	r24, 0x31	; 49
+ 560:	0e 94 1d 01 	call	0x23a	; 0x23a <lcd_data_sim>
+
+			PORTB = (1 << PB7);	// turn on LED in PB7
+ 564:	18 bb       	out	0x18, r17	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 566:	2f ef       	ldi	r18, 0xFF	; 255
+ 568:	87 ea       	ldi	r24, 0xA7	; 167
+ 56a:	91 e6       	ldi	r25, 0x61	; 97
+ 56c:	21 50       	subi	r18, 0x01	; 1
+ 56e:	80 40       	sbci	r24, 0x00	; 0
+ 570:	90 40       	sbci	r25, 0x00	; 0
+ 572:	e1 f7       	brne	.-8      	; 0x56c <main+0xc2>
+ 574:	00 c0       	rjmp	.+0      	; 0x576 <main+0xcc>
+ 576:	00 00       	nop
+			_delay_ms(4000);	// for ~4sec
+			PORTB = (0 << PB7);	// turn off LED in PB7
+ 578:	18 ba       	out	0x18, r1	; 24
+			
+			flag_clear = 0;
+ 57a:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <flag_clear>
+
+			lcd_init_sim();
+ 57e:	0e 94 2d 01 	call	0x25a	; 0x25a <lcd_init_sim>
+			TCNT1H = 0xfc;
+ 582:	dd bd       	out	0x2d, r29	; 45
+			TCNT1L = 0xf3;
+ 584:	cc bd       	out	0x2c, r28	; 44
+			sei();
+ 586:	78 94       	sei
+ 588:	a5 cf       	rjmp	.-182    	; 0x4d4 <main+0x2a>
+		}
+		else  // if the key is wrong
+		{
+			for(i=0; i<4; i++)	//repeat 4 times --> ~4sec
+ 58a:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <i+0x1>
+ 58e:	10 92 69 00 	sts	0x0069, r1	; 0x800069 <i>
+			{
+				z = PINB | 0x80; // turn on PB7
+ 592:	86 b3       	in	r24, 0x16	; 22
+ 594:	80 68       	ori	r24, 0x80	; 128
+ 596:	80 93 67 00 	sts	0x0067, r24	; 0x800067 <z>
+				PORTB = z;
+ 59a:	88 bb       	out	0x18, r24	; 24
+ 59c:	2f ef       	ldi	r18, 0xFF	; 255
+ 59e:	84 e3       	ldi	r24, 0x34	; 52
+ 5a0:	9c e0       	ldi	r25, 0x0C	; 12
+ 5a2:	21 50       	subi	r18, 0x01	; 1
+ 5a4:	80 40       	sbci	r24, 0x00	; 0
+ 5a6:	90 40       	sbci	r25, 0x00	; 0
+ 5a8:	e1 f7       	brne	.-8      	; 0x5a2 <main+0xf8>
+ 5aa:	00 c0       	rjmp	.+0      	; 0x5ac <main+0x102>
+ 5ac:	00 00       	nop
+				_delay_ms(500);	// for ~ 0.5sec
+				z = PINB & 0x7f ;	// turn off PB7
+ 5ae:	86 b3       	in	r24, 0x16	; 22
+ 5b0:	8f 77       	andi	r24, 0x7F	; 127
+ 5b2:	80 93 67 00 	sts	0x0067, r24	; 0x800067 <z>
+				PORTB = z;
+ 5b6:	88 bb       	out	0x18, r24	; 24
+ 5b8:	2f ef       	ldi	r18, 0xFF	; 255
+ 5ba:	84 e3       	ldi	r24, 0x34	; 52
+ 5bc:	9c e0       	ldi	r25, 0x0C	; 12
+ 5be:	21 50       	subi	r18, 0x01	; 1
+ 5c0:	80 40       	sbci	r24, 0x00	; 0
+ 5c2:	90 40       	sbci	r25, 0x00	; 0
+ 5c4:	e1 f7       	brne	.-8      	; 0x5be <main+0x114>
+ 5c6:	00 c0       	rjmp	.+0      	; 0x5c8 <main+0x11e>
+ 5c8:	00 00       	nop
+			TCNT1L = 0xf3;
+			sei();
+		}
+		else  // if the key is wrong
+		{
+			for(i=0; i<4; i++)	//repeat 4 times --> ~4sec
+ 5ca:	80 91 69 00 	lds	r24, 0x0069	; 0x800069 <i>
+ 5ce:	90 91 6a 00 	lds	r25, 0x006A	; 0x80006a <i+0x1>
+ 5d2:	01 96       	adiw	r24, 0x01	; 1
+ 5d4:	90 93 6a 00 	sts	0x006A, r25	; 0x80006a <i+0x1>
+ 5d8:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <i>
+ 5dc:	04 97       	sbiw	r24, 0x04	; 4
+ 5de:	cc f2       	brlt	.-78     	; 0x592 <main+0xe8>
+ 5e0:	79 cf       	rjmp	.-270    	; 0x4d4 <main+0x2a>
+ 5e2:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <i+0x1>
+ 5e6:	10 92 69 00 	sts	0x0069, r1	; 0x800069 <i>
+ 5ea:	d3 cf       	rjmp	.-90     	; 0x592 <main+0xe8>
+
+000005ec <_exit>:
+ 5ec:	f8 94       	cli
+
+000005ee <__stop_program>:
+ 5ee:	ff cf       	rjmp	.-2      	; 0x5ee <__stop_program>

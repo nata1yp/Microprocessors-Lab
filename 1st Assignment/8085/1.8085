@@ -1,0 +1,73 @@
+IN 10H
+
+LXI B,03E8H ;delay 1000msec
+;LXI B,1388H
+
+MAIN:
+	LDA 2000H ;read input x of dip switch
+	STA 0900H ;store the number in a random memory place to check later the MSB	
+	ANI 0FH ;isolate the 4LSB
+	MOV H,A 
+	LDA 0900H
+	ANI 80H ;isolate the MSB of the dip switch
+	CPI 80H ;if MSB is 1 then
+	JZ UPCOUNT
+	JMP MAIN
+
+UPCOUNT:
+	MVI A,FFH
+UP:
+	STA 3000H 
+	CALL DELB
+	XRI FFH ;inverse logic
+	MOV L,A
+	JMP MSBONUP
+	CONTINUEUP:
+		MOV A,L
+		CMP H ;if reached the count number
+		JZ DOWN
+		INR A ;else increase counter
+		XRI FFH 
+		JMP UP ;and repeat
+
+
+DOWN:
+	XRI FFH ;inverse logic on led
+	STA 3000H ;LED=4LSB DIP SWITCH
+	CALL DELB
+	MOV L,A ;move A to L to save the value inside it
+	JMP MSBON
+	CONTINUEDOWN:
+		MOV A,L
+		XRI FFH ;inverse logic to get it to the right logic
+		CPI 00H ;if counter is 0 go to upcount
+		JZ CHECK
+		DCR A ;else decrease the counter and repeat
+		JMP DOWN
+	
+
+
+CHECK:
+	LDA 2000H ;read the dip switch
+	ANI 0FH ;isolate the 4LSB
+	CMP H ;compare with the previous amount of the dip switch
+	JZ UPCOUNT ;if it didnt change continue to upcount
+	MOV H,A ;else change the new counter
+	JZ UPCOUNT
+
+MSBON:
+	LDA 2000H
+	ANI 80H ;check the MSB if it's ON
+	CPI 80H
+	JZ CONTINUEDOWN
+	JMP MSBON
+
+MSBONUP:
+	LDA 2000H
+	ANI 80H ;check the MSB if it's ON
+	CPI 80H
+	JZ CONTINUEUP
+	JMP MSBONUP
+
+
+END

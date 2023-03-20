@@ -1,0 +1,45 @@
+IN 10H
+
+MAIN:
+	MVI L,00H
+	MVI C,00H
+	CALL KIND
+	MOV H,A ;else just save the first number to register E
+	CALL KIND
+	MOV B,A ;save the second number in B
+	MOV A,H
+	RLC ;4 times rlc to multiply x by 16
+	RLC
+	RLC
+	RLC
+	ADD B ;add y
+	HUNDREDS:
+		CPI 64H ;if not larger than 100
+		JC DECADES ;go to calculate the decades
+		SUI 64H ;else substarct 100 until not over 100
+		INR L ;counter for hundreds
+		JMP HUNDREDS ;repeat
+				
+			
+	DECADES:
+		MOV H,A ;move to register H the 2digit number without the hundreds
+		MOV A,L ;move the  amount of hundreds to A
+		STA 0902H ;store the hundreds in the 3rd place
+		MOV A,H ;restore A
+	DEC:
+		CPI 0AH ;substract 10 until it is no longer over 10
+		JC RES
+		SUI 0AH
+		INR C ;counter for decades
+		JMP DEC	
+			
+	RES:
+		STA 0900H
+		MOV A,C 
+		STA 0901H
+		LXI D,0900H
+		CALL STDM
+		CALL DCD
+		JMP MAIN	
+
+END
